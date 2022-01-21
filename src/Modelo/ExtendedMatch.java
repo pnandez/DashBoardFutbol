@@ -27,4 +27,12 @@ public class ExtendedMatch extends Match{
         }
 
     }
+
+    public List<Goal> getGoalList() {
+        return goalList;
+    }
+
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
 }
