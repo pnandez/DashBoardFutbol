@@ -75,8 +75,9 @@ public class LaLigaController implements Controller {
         return matchList;
     }
 
-    //TODO GET ALL INFO FROM MATCH
-
+    public ExtendedMatch getInfoFromMatch(long ID){
+        return modelo.getInfoFromMatch(ID);
+    }
 
     public View getVista() {
         return vista;

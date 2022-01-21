@@ -111,6 +111,17 @@ public class LaLigaModel {
     public List<Match> getGamesList(){
         return gamesList;
     }
+
+    public ExtendedMatch getInfoFromMatch(long ID){
+        try {
+            JSONObject rawObject = HTTPJSONGET.getDataFromURL("http://api.football-data.org/v2/matches/" + ID, "X-Auth-Token", "8075760f2a9f441295a9c7b1a6ad7b03");
+            return new ExtendedMatch((JSONObject) rawObject.get("match"));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
 }
 
 
