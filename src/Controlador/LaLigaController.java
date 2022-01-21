@@ -14,12 +14,11 @@ public class LaLigaController implements Controller {
     private Team teamToShow;
     private View vista;
     private ViewFacade fachadaVista;
-    private static LaLigaController laLigaController = null;
 
-    private LaLigaController(LaLigaModel model, View fachadaVista){
+    public LaLigaController(LaLigaModel model, View view){
         this.modelo = model;
-        this.fachadaVista = new ViewFacade();
-        this.teamToShow = this.modelo.getTeamByName("CA Osasuna");
+        this.fachadaVista = new ViewFacade(view);
+        this.teamToShow = this.modelo.getTeamByName("FC Barcelona");
         try {
             model.initModel();
             this.vista = this.fachadaVista.createView(this.teamToShow, getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam());
@@ -28,7 +27,7 @@ public class LaLigaController implements Controller {
         }
     }
 
-    private LaLigaController(LaLigaModel model){
+    public LaLigaController(LaLigaModel model){
         this.modelo = model;
         this.fachadaVista = new ViewFacade();
         try {
@@ -41,19 +40,7 @@ public class LaLigaController implements Controller {
     }
 
 
-    public static LaLigaController getInstance(LaLigaModel modelo, View vista){
-        if(laLigaController == null){
-            laLigaController = new LaLigaController(modelo, vista);
-        }
-        return laLigaController;
-    }
 
-    public static LaLigaController getInstance(LaLigaModel modelo){
-        if(laLigaController == null){
-            laLigaController = new LaLigaController(modelo);
-        }
-        return laLigaController;
-    }
 
 
     public void setTeamToShow(String teamName){
@@ -87,6 +74,9 @@ public class LaLigaController implements Controller {
         }
         return matchList;
     }
+
+    //TODO GET ALL INFO FROM MATCH
+
 
     public View getVista() {
         return vista;

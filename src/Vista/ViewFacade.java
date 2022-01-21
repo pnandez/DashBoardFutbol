@@ -1,7 +1,5 @@
 package Vista;
 
-import Controlador.Controller;
-import Controlador.LaLigaController;
 import Modelo.Match;
 import Modelo.POSITIONS;
 import Modelo.Player;
@@ -18,11 +16,15 @@ public class ViewFacade {
 
 
     public ViewFacade(){
+        vista = new VistaCLI();
+    }
 
+    public ViewFacade(View view){
+        vista = view;
     }
 
     public View createView(Team teamToShow, List<Player> listPlayers, Map<POSITIONS, Integer> positionsIntegerMap, List<Match> matchList){
-        vista = new VistaCLI();
+
         vista.setTeam(teamToShow.getName());
         List<String> listNamePlayers = new ArrayList<>();
         for(Player p : listPlayers){

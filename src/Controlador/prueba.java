@@ -7,7 +7,7 @@ import Vista.VistaCLI;
 public class prueba {
     public static void main(String[] args) {
         LaLigaModel model = LaLigaModel.getInstance();
-        LaLigaController controller =  LaLigaController.getInstance(model);
+        LaLigaController controller =  new LaLigaController(model);
         controller.getVista().display();
     }
 

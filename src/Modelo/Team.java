@@ -54,4 +54,13 @@ public class Team {
     public void setSquad(List<Player> squad) {
         this.squad = squad;
     }
+
+    public Player getPlayerByID(long ID){
+        for(Player p : squad){
+            if (p.getId() == ID){
+                return p;
+            }
+        }
+        return null;
+    }
 }

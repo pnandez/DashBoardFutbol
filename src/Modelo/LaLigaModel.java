@@ -90,6 +90,15 @@ public class LaLigaModel {
             System.out.println(gamesList.size());
     }
 
+    public Team getTeamById(long ID){
+        for(Team t: teamList){
+            if(t.getId() == (ID)){
+                return t;
+            }
+        }
+        return null;
+    }
+
     public Team getTeamByName(String teamToShow) {
         for(Team t: teamList){
             if(t.getName().equals(teamToShow)){

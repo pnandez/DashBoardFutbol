@@ -10,8 +10,6 @@ import java.util.Map;
 
 public class VistaCLI extends View{
 
-
-
     public VistaCLI(){
         super();
     }
