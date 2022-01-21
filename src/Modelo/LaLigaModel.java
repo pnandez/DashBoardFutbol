@@ -109,6 +109,7 @@ public class LaLigaModel {
     }
 
     public List<Match> getGamesList(){
+
         return gamesList;
     }
 
