@@ -29,10 +29,18 @@ public abstract class Chart {
         dataMap_ = dataMap;
     }
 
+    public Chart(String title, String xAxisName, String yAxisName) throws Exception {
+        title_ = title;
+        xAxisName_ = xAxisName;
+        yAxisName_ = yAxisName;
+    }
+
     protected void createChart(Double[] rangeMinMaxValues) throws Exception {
         this.createChart();
         reArrangeYAxisRange(rangeMinMaxValues);
     }
+
+
 
     public JPanel DrawChart() throws Exception {
         JPanel chartPanel =new ChartPanel(chart_);
@@ -64,5 +72,6 @@ public abstract class Chart {
     public abstract JFreeChart createChart() throws Exception;
 
     public abstract AbstractDataset createDataset() throws Exception;
+
 
 }
