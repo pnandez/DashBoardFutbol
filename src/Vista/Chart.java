@@ -69,6 +69,10 @@ public abstract class Chart {
 
     }
 
+    public void setDataMap_(Map<String, Double> dataMap_) {
+        this.dataMap_ = dataMap_;
+    }
+
     public abstract JFreeChart createChart() throws Exception;
 
     public abstract AbstractDataset createDataset() throws Exception;

@@ -14,6 +14,10 @@ import java.util.Map;
 public class PieChart extends Chart{
     public PieChart(){}
 
+    public PieChart(String title, String xAxis, String yAxis) throws Exception{
+        super(title,xAxis,yAxis);
+    }
+
 
     public PieChart(String xAxis, String yAxis) throws Exception {
         super("Grafica de tarta", xAxis, yAxis);

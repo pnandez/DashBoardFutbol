@@ -18,16 +18,13 @@ public class BarChart extends Chart{
         public BarChart(){}
 
         public BarChart(String title,String xAxis, String yAxis, String categoryAxis, Map<String, Double> dataMap) throws Exception {
-
             super(title, xAxis, yAxis, dataMap);
             categoryAxis_ = "categoryAxis";
-            createChart();
         }
 
-        public BarChart(String title,String xAxis, String yAxis, String categoryAxis, Map<String, Double> dataMap, Double[] rangeMinMaxValues) throws Exception {
-            super(title, xAxis, yAxis, dataMap);
+        public BarChart(String title,String xAxis, String yAxis, String categoryAxis) throws Exception {
+            super(title, xAxis, yAxis);
             categoryAxis_ = categoryAxis;
-            createChart( rangeMinMaxValues);
         }
 
         @Override

@@ -2,6 +2,7 @@ package Vista;
 
 import Modelo.Match;
 import Modelo.POSITIONS;
+import Modelo.RESULT;
 import Modelo.Team;
 
 import java.util.ArrayList;
@@ -12,16 +13,23 @@ import java.util.Map;
 public abstract class View {
 
     protected String teamToShow;
+    protected List<String> teamsList;
     protected List<String> playersNameList;
     protected Map<POSITIONS, Integer> positionsNumPlayersMap;
+    protected Map<RESULT, Integer> teamStatsMap;
     protected List<Match> matchList;
 
     protected View(){
         playersNameList = new ArrayList<>();
         positionsNumPlayersMap = new HashMap<>();
+        teamStatsMap = new HashMap<>();
     }
 
     public abstract void display();
+
+    public void setTeamsList(List<String> teamsList){
+        this.teamsList = teamsList;
+    }
 
     public void setTeam(String team){
         this.teamToShow = team;
@@ -38,4 +46,6 @@ public abstract class View {
     public void setDataMatches(List<Match> matchesList){
         this.matchList = matchesList;
     }
+
+
 }
