@@ -21,7 +21,7 @@ public class LaLigaController implements Controller {
         this.teamToShow = this.modelo.getTeamByName("FC Barcelona");
         try {
             model.initModel();
-            this.vista = this.fachadaVista.createView(this.teamToShow, getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam());
+            this.vista = this.fachadaVista.createView(this.teamToShow, getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam(), getStatsFromTeam());
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -33,12 +33,11 @@ public class LaLigaController implements Controller {
         try {
             model.initModel();
             this.teamToShow = this.modelo.getTeamByName("CA Osasuna");
-            this.vista = this.fachadaVista.createView(this.teamToShow, getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam());
+            this.vista = this.fachadaVista.createView(this.teamToShow, getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam(), getStatsFromTeam());
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
     }
-
 
 
 
@@ -77,6 +76,10 @@ public class LaLigaController implements Controller {
 
     public ExtendedMatch getInfoFromMatch(long ID){
         return modelo.getInfoFromMatch(ID);
+    }
+
+    private Map<RESULT, Long> getStatsFromTeam() {
+        return teamToShow.getTeamStatsMap();
     }
 
     public View getVista() {

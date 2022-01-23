@@ -25,6 +25,7 @@ public class VistaCLI extends View{
         for(Match m : matchList){
             System.out.println(m.toString());
         }
+        System.out.println("Mostrando estadísticas del equipo: " + teamStatsMap);
     }
 
 }

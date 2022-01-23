@@ -1,9 +1,6 @@
 package Vista;
 
-import Modelo.Match;
-import Modelo.POSITIONS;
-import Modelo.Player;
-import Modelo.Team;
+import Modelo.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,7 @@ public class ViewFacade {
         vista = view;
     }
 
-    public View createView(Team teamToShow, List<Player> listPlayers, Map<POSITIONS, Integer> positionsIntegerMap, List<Match> matchList){
+    public View createView(Team teamToShow, List<Player> listPlayers, Map<POSITIONS, Integer> positionsIntegerMap, List<Match> matchList, Map<RESULT, Long> mapStatsTeam){
 
         vista.setTeam(teamToShow.getName());
         List<String> listNamePlayers = new ArrayList<>();
@@ -33,6 +30,7 @@ public class ViewFacade {
         vista.setDataPlayers(listNamePlayers);
         vista.setDataPlayerPositionInTeam(positionsIntegerMap);
         vista.setDataMatches(matchList);
+        vista.setTeamStats(mapStatsTeam);
         return vista;
     }
 

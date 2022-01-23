@@ -16,7 +16,7 @@ public abstract class View {
     protected List<String> teamsList;
     protected List<String> playersNameList;
     protected Map<POSITIONS, Integer> positionsNumPlayersMap;
-    protected Map<RESULT, Integer> teamStatsMap;
+    protected Map<RESULT, Long> teamStatsMap;
     protected List<Match> matchList;
 
     protected View(){
@@ -47,5 +47,7 @@ public abstract class View {
         this.matchList = matchesList;
     }
 
-
+    public void setTeamStats(Map<RESULT, Long> teamStatsMap) {
+        this.teamStatsMap = teamStatsMap;
+    }
 }

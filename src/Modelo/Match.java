@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import java.util.Date;
-
+//TODO Implementar proxy con match
 public class Match {
     private long homeTeamID;
     private long awayTeamID;

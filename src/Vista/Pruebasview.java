@@ -1,6 +1,6 @@
 package Vista;
 
-public class prueba {
+public class Pruebasview {
     public static void main(String[] args) {
 
     }
