@@ -46,5 +46,10 @@ public class LineChart extends Chart{
         return dataset;
     }
 
+    @Override
+    public AbstractDataset updateDataset(Map<String, Double> map) {
+        return null;
+    }
+
 }
 

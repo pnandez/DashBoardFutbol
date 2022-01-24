@@ -11,13 +11,18 @@ public class LaLigaModel {
     private String URL = null;
     private JSONObject rawData;
     private List<Team> teamList;
-    private List<Match> gamesList;
+    private List<IMatch> gamesList;
 
     private LaLigaModel() {
         teamList = new ArrayList<>();
         gamesList = new ArrayList<>();
         dataFetcher = new HTTPJSONDataFetcher("http://api.football-data.org/v2/");
         dataFetcher.setRequestProperty("X-Auth-Token", "8075760f2a9f441295a9c7b1a6ad7b03");
+        try {
+            initModel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static LaLigaModel getInstance() {
@@ -30,7 +35,7 @@ public class LaLigaModel {
         setTeamList();
         Thread.sleep(6000);
         setPlayers();
-        Thread.sleep(6000);
+        Thread.sleep(10000);
         setGamesList();
         Thread.sleep(6000);
         setStatsForTeam();
@@ -82,7 +87,7 @@ public class LaLigaModel {
 
 
             for (Object o : teamsJSONArray) {
-                gamesList.add(new Match((JSONObject) o));
+                gamesList.add(new MatchProxy((JSONObject) o));
             }
 
         } catch (Exception e) {
@@ -110,11 +115,15 @@ public class LaLigaModel {
         return null;
     }
 
-    public List<Match> getGamesList() {
+    public List<IMatch> getGamesList() {
         return gamesList;
     }
 
-    public ExtendedMatch getInfoFromMatch(long ID) {
+    public List<Team> getTeamList() {
+        return teamList;
+    }
+
+    public IMatch getInfoFromMatch(long ID) {
         try {
             JSONObject rawObject = HTTPJSONGET.getDataFromURL("http://api.football-data.org/v2/matches/" + ID, "X-Auth-Token", "8075760f2a9f441295a9c7b1a6ad7b03");
             return new ExtendedMatch((JSONObject) rawObject.get("match"));

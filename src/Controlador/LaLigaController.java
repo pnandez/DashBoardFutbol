@@ -1,27 +1,23 @@
 package Controlador;
 
 import Modelo.*;
-import Vista.View;
+import Vista.LaLigaView;
 import Vista.ViewFacade;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LaLigaController implements Controller {
     private LaLigaModel modelo;
     private Team teamToShow;
-    private View vista;
+    private LaLigaView vista;
     private ViewFacade fachadaVista;
 
-    public LaLigaController(LaLigaModel model, View view){
+    public LaLigaController(LaLigaModel model, LaLigaView view){
         this.modelo = model;
         this.fachadaVista = new ViewFacade(view);
-        this.teamToShow = this.modelo.getTeamByName("FC Barcelona");
+        this.teamToShow = this.modelo.getTeamList().get(0);
         try {
-            model.initModel();
-            this.vista = this.fachadaVista.createView(this.teamToShow, getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam(), getStatsFromTeam());
+            this.vista = this.fachadaVista.createView(this, this.teamToShow,getTeamList(), getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam(), getStatsFromTeam());
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -31,15 +27,16 @@ public class LaLigaController implements Controller {
         this.modelo = model;
         this.fachadaVista = new ViewFacade();
         try {
-            model.initModel();
-            this.teamToShow = this.modelo.getTeamByName("CA Osasuna");
-            this.vista = this.fachadaVista.createView(this.teamToShow, getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam(), getStatsFromTeam());
+            this.teamToShow = this.modelo.getTeamList().get(0);
+            this.vista = this.fachadaVista.createView(this, this.teamToShow, getTeamList(), getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam(), getStatsFromTeam());
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
     }
 
-
+    public List<Team> getTeamList() {
+        return modelo.getTeamList();
+    }
 
 
     public void setTeamToShow(String teamName){
@@ -64,17 +61,28 @@ public class LaLigaController implements Controller {
         return teamToShow.getSquad();
     }
 
-    public List<Match> getAllMatchesFromTeam(){
-        List<Match> matchList = new ArrayList<>();
-        for(Match m: modelo.getGamesList()){
+    public List<IMatch> getAllMatchesFromTeam(){
+        List<IMatch> matchProxyList = new ArrayList<>();
+        for(IMatch m: modelo.getGamesList()){
             if(m.checkIfTeamPlayed(teamToShow)){
-                matchList.add(m);
+                matchProxyList.add(m);
             }
         }
-        return matchList;
+        Collections.sort(matchProxyList, new Comparator<IMatch>() {
+            @Override
+            public int compare(IMatch o1, IMatch o2) {
+                return Long.compare(o1.getMatchDay(), o2.getMatchDay());
+            }
+        });
+        return matchProxyList;
     }
 
-    public ExtendedMatch getInfoFromMatch(long ID){
+    public void setNewTeamToShow(String newTeamToShow){
+        this.teamToShow = modelo.getTeamByName(newTeamToShow);
+        fachadaVista.updateView(teamToShow, getAllPlayersFromTeam(),getMapNumberPlayersPosition(),getAllMatchesFromTeam(), getStatsFromTeam());
+    }
+
+    public IMatch getInfoFromMatch(long ID){
         return modelo.getInfoFromMatch(ID);
     }
 
@@ -82,8 +90,12 @@ public class LaLigaController implements Controller {
         return teamToShow.getTeamStatsMap();
     }
 
-    public View getVista() {
+    public LaLigaView getVista() {
         return vista;
+    }
+
+    public Team getTeamByID(long id){
+        return modelo.getTeamById(id);
     }
 }
 

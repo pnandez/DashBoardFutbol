@@ -4,6 +4,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.general.AbstractDataset;
+import org.jfree.data.general.Dataset;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -41,9 +42,12 @@ public abstract class Chart {
     }
 
 
+    public Map<String, Double> getDataMap_() {
+        return dataMap_;
+    }
 
-    public JPanel DrawChart() throws Exception {
-        JPanel chartPanel =new ChartPanel(chart_);
+    public ChartPanel DrawChart() throws Exception {
+        ChartPanel chartPanel =new ChartPanel(chart_);
         chartPanel.setPreferredSize(new Dimension(500, 270));
         chartPanel.setBorder(new EmptyBorder(10,10,10,10));
         return chartPanel;
@@ -77,5 +81,5 @@ public abstract class Chart {
 
     public abstract AbstractDataset createDataset() throws Exception;
 
-
+    public abstract AbstractDataset updateDataset(Map<String, Double> map);
 }

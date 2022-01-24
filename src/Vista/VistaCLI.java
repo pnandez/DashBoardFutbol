@@ -1,14 +1,9 @@
 package Vista;
 
-import Modelo.Match;
-import Modelo.POSITIONS;
+import Modelo.IMatch;
+import Modelo.MatchProxy;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class VistaCLI extends View{
+public class VistaCLI extends LaLigaView {
 
     public VistaCLI(){
         super();
@@ -22,7 +17,7 @@ public class VistaCLI extends View{
         System.out.println("Mostrando nombres de jugadores: " + playersNameList);
         System.out.println("Mostrando jugadores por posicion: " + positionsNumPlayersMap);
         System.out.println("Mostrando proximos partidos: " );
-        for(Match m : matchList){
+        for(IMatch m : matchList){
             System.out.println(m.toString());
         }
         System.out.println("Mostrando estadísticas del equipo: " + teamStatsMap);

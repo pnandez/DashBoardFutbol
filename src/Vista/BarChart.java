@@ -38,12 +38,23 @@ public class BarChart extends Chart{
         @Override
         public AbstractDataset createDataset() throws Exception {
 
-            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            DefaultCategoryDataset barDataset = new DefaultCategoryDataset();
             for(Map.Entry<String, Double> entry: dataMap_.entrySet()){
-                dataset.addValue(entry.getValue(), categoryAxis_,entry.getKey());
+                barDataset.addValue(entry.getValue(), categoryAxis_,entry.getKey());
             }
-            return dataset;
+
+            return barDataset;
         }
+
+    @Override
+    public AbstractDataset updateDataset(Map<String, Double> map) {
+        DefaultCategoryDataset abstractDataset = (DefaultCategoryDataset) chart_.getCategoryPlot().getDataset();
+        abstractDataset.clear();
+        for(Map.Entry<String, Double> entry: dataMap_.entrySet()){
+            abstractDataset.addValue(entry.getValue(), categoryAxis_,entry.getKey());
+        }
+        return abstractDataset;
+    }
 
 
 }
