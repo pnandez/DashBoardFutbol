@@ -1,9 +1,6 @@
 package Vista;
 
-import Modelo.IMatch;
-import Modelo.MatchProxy;
-import Modelo.POSITIONS;
-import Modelo.RESULT;
+import Modelo.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -64,6 +61,7 @@ public class vistaGrafica1 extends LaLigaView {
                 int row = partidosResultadosTable.getSelectedRow();
                 System.out.println("Button clicked. IMatch info = " + tableModel.getDataVector().elementAt(row).toString());
                 System.out.println("Real match info: " + matchList.get(row).toString());
+                displayWindowInfoMatch(controller.getInfoFromMatch(matchList.get(row).getID()));
             }
         });
         listModel = new DefaultListModel();
@@ -216,7 +214,7 @@ public class vistaGrafica1 extends LaLigaView {
 
     }
 
-    public void setDatasets(){
+    private void setDatasets(){
         finalMapBarChart.clear();
         for (Map.Entry<POSITIONS,Integer> entry : this.positionsNumPlayersMap.entrySet()){
             finalMapBarChart.put(entry.getKey().toString(),entry.getValue().doubleValue());
@@ -227,6 +225,45 @@ public class vistaGrafica1 extends LaLigaView {
         }
         pieChartPartidosGanadosPerdidosEmpatados.setDataMap_(finalMapPieChart);
 
+    }
+
+    private void displayWindowInfoMatch(IMatch match){
+        JFrame frame2 = new JFrame("Información detallada del partido");
+        JPanel panelPrincipalFrame2 = new JPanel(new GridBagLayout());
+        JPanel panelequipos = new JPanel(new GridBagLayout());
+        JTable tablaGoles  = new JTable();
+        JScrollPane panelTablaGoles = new JScrollPane(tablaGoles);
+        JTable tablaBookings  = new JTable();
+        JScrollPane panelTablaBookings = new JScrollPane(tablaBookings);
+        JPanel panelTablas = new JPanel(new GridBagLayout());
+        JLabel labelFechas = new JLabel("Jornada: " + match.getMatchDay() + "           Fecha: " + match.getMatchDate());
+        JLabel homeTeamName = new JLabel(match.getHomeTeamName());
+        JLabel awayTeamName = new JLabel(match.getAwayTeamName());
+        JLabel result = new JLabel( match.getHomeTeamScore() + " - " + match.getAwayTeamScore());
+
+        //setGoalsTable();
+        //setBookingsTable();
+
+        GridBagConstraints panelPrincipal2Constraints = new GridBagConstraints();
+        panelPrincipal2Constraints.gridy = 0;
+        panelPrincipal2Constraints.gridx = 1;
+        panelPrincipalFrame2.add(labelFechas,panelPrincipal2Constraints);
+        panelPrincipal2Constraints.gridy = 1;
+        panelPrincipal2Constraints.gridx = 0;
+        panelPrincipalFrame2.add(homeTeamName,panelPrincipal2Constraints);
+        panelPrincipal2Constraints.gridx = 1;
+        panelPrincipalFrame2.add(result,panelPrincipal2Constraints);
+        panelPrincipal2Constraints.gridx = 2;
+        panelPrincipalFrame2.add(awayTeamName,panelPrincipal2Constraints);
+
+
+        frame2.setMinimumSize(new Dimension(400,400));
+        frame2.setLayout(new FlowLayout(FlowLayout.CENTER, 3,3));
+        frame2.add(panelPrincipalFrame2);
+        frame2.setResizable(false);
+        frame2.setVisible(true);
+        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame2.setLocationRelativeTo(null);
     }
 
 }

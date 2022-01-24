@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 public interface IMatch {
+
+    public long getID();
+
     public long getHomeTeamID();
     public long getAwayTeamID();
 

@@ -2,6 +2,9 @@ package Modelo;
 
 import org.json.simple.*;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 

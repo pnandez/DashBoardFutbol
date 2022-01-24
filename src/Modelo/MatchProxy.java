@@ -16,6 +16,11 @@ public class MatchProxy implements IMatch{
     }
 
     @Override
+    public long getID() {
+        return extendedMatch.getID();
+    }
+
+    @Override
     public long getHomeTeamID() {
         return extendedMatch.getHomeTeamID();
     }

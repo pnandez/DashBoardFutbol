@@ -3,6 +3,7 @@ package Modelo;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ public class Team {
         goalsReceived = (long) object.get("goalsAgainst");
         goalsScored = (long) object.get("goalsFor");
     }
+
 
 
     public Map<RESULT, Long> getTeamStatsMap() {

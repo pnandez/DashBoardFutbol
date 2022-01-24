@@ -71,6 +71,11 @@ public class ExtendedMatch implements IMatch{
     }
 
     @Override
+    public long getID() {
+        return this.ID;
+    }
+
+    @Override
     public long getHomeTeamID() {
         return homeTeamID;
     }
