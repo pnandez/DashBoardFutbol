@@ -21,7 +21,7 @@ public class ViewFacade {
         vista = view;
     }
 
-    public LaLigaView createView(LaLigaController c, Team teamToShow, List<Team> teamList, List<Player> listPlayers, Map<POSITIONS, Integer> positionsIntegerMap, List<IMatch> matchProxyList, Map<RESULT, Long> mapStatsTeam){
+    public LaLigaView createView(LaLigaController c, Team teamToShow, List<Team> teamList, List<Player> listPlayers, Map<POSITIONS, Integer> positionsIntegerMap, List<IMatch> matchProxyList, Map<RESULT, Long> mapStatsTeam, Standings standings){
 
         vista.setController(c);
         vista.setTeam(teamToShow.getName());
@@ -39,6 +39,7 @@ public class ViewFacade {
             vista.setDataPlayerPositionInTeam(positionsIntegerMap);
             vista.setDataMatches(matchProxyList);
             vista.setTeamStats(mapStatsTeam);
+            vista.setLaLigaStandings(standings.getStandingsMap());
         } catch (Exception e) {
             e.printStackTrace();
         }

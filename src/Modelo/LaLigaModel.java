@@ -15,6 +15,7 @@ public class LaLigaModel {
     private JSONObject rawData;
     private List<Team> teamList;
     private List<IMatch> gamesList;
+    private Standings standings;
 
     private LaLigaModel() {
         teamList = new ArrayList<>();
@@ -42,7 +43,20 @@ public class LaLigaModel {
         setGamesList();
         Thread.sleep(6000);
         setStatsForTeam();
+        Thread.sleep(6000);
+        setStandings();
 
+    }
+
+    private void setStandings() {
+        try {
+            JSONObject rawObject = HTTPJSONGET.getDataFromURL("http://api.football-data.org/v2/competitions/2014/standings", "X-Auth-Token", "8075760f2a9f441295a9c7b1a6ad7b03");
+            JSONArray standingsJSONArray = (JSONArray) rawObject.get("standings");
+            JSONArray standingsTableJSONArray = (JSONArray) ((JSONObject) standingsJSONArray.get(0)).get("table");
+            standings = new Standings(standingsTableJSONArray);
+        } catch (Exception e) {
+            System.out.println("Exception in setTeams: " + e.getMessage());
+        }
     }
 
     private void setTeamList() {
@@ -61,14 +75,11 @@ public class LaLigaModel {
     private void setPlayers() {
         //TODO cuando acabe todo quitar el contador y el if y set el thread.sleep a 6000
         System.out.println(teamList.size());
-        int contador = 0;
         for (Team t : teamList) {
-            contador++;
-            if (contador < 10) {
                 try {
                     JSONObject rawObject = HTTPJSONGET.getDataFromURL("http://api.football-data.org/v2/teams/" + t.getId(), "X-Auth-Token", "8075760f2a9f441295a9c7b1a6ad7b03");
                     JSONArray teamsJSONArray = (JSONArray) rawObject.get("squad");
-                    Thread.sleep(6000);
+                    Thread.sleep(6500);
                     for (Object o : teamsJSONArray) {
                         t.addPlayerToSquad(new Player((JSONObject) o));
                     }
@@ -78,7 +89,7 @@ public class LaLigaModel {
                 }
 
                 System.out.println(t.getName() + " -> " + t.getSquad().size());
-            }
+
         }
     }
 
@@ -150,6 +161,11 @@ public class LaLigaModel {
         }
         return null;
     }
+
+    public Standings getStandings() {
+        return standings;
+    }
 }
+
 
 

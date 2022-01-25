@@ -3,10 +3,7 @@ package Vista;
 import Controlador.LaLigaController;
 import Modelo.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class LaLigaView {
 
@@ -17,12 +14,14 @@ public abstract class LaLigaView {
     protected Map<POSITIONS, Integer> positionsNumPlayersMap;
     protected Map<RESULT, Long> teamStatsMap;
     protected List<IMatch> matchList;
+    protected Map<String, Long> standingsMap;
 
     protected LaLigaView(){
         playersNameList = new ArrayList<>();
         positionsNumPlayersMap = new HashMap<>();
         teamStatsMap = new HashMap<>();
         teamsList = new ArrayList<>();
+        standingsMap = new LinkedHashMap<>();
     }
 
     public abstract void display();
@@ -53,6 +52,10 @@ public abstract class LaLigaView {
 
     public void setTeamStats(Map<RESULT, Long> teamStatsMap) throws Exception {
         this.teamStatsMap = teamStatsMap;
+    }
+
+    public void setLaLigaStandings(Map<String, Long> standings){
+        this.standingsMap = standings;
     }
 
 }

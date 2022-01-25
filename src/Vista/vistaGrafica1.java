@@ -23,11 +23,14 @@ public class vistaGrafica1 extends LaLigaView {
     private JPanel panelList;
     private JLabel labelLista;
     private JPanel panelTabla;
+    private JPanel panelClasificacion;
     private JComboBox<String> teamSelectorComboBox;
     private JScrollPane scrollPanelTabla;
     private JScrollPane scrollPanelList;
     private JList<String> listaNombreJugadores;
     private JTable partidosResultadosTable;
+    private JTable clasificaciónLigaTabla;
+    DefaultTableModel tableStandingsModel;
     private JButton getMoreInfoMatchButton;
     Map<String, Double> finalMapBarChart;
     Map<String, Double> finalMapPieChart;
@@ -35,7 +38,7 @@ public class vistaGrafica1 extends LaLigaView {
     DefaultTableModel tableModel;
 
 
-    public vistaGrafica1(){
+    public vistaGrafica1() {
         super();
         try {
             pieChartPartidosGanadosPerdidosEmpatados = new PieChart("Partidos jugados", "Resultado de partidos", "Numero de partidos");
@@ -51,6 +54,7 @@ public class vistaGrafica1 extends LaLigaView {
         panelList = new JPanel(new GridBagLayout());
         panelTabla = new JPanel(new GridBagLayout());
         panelPrincipal = new JPanel(new GridBagLayout());
+        panelClasificacion = new JPanel(new GridBagLayout());
         labelLista = new JLabel("Jugadores del equipo:");
         partidosResultadosTable = new JTable();
         listaNombreJugadores = new JList<>();
@@ -87,7 +91,7 @@ public class vistaGrafica1 extends LaLigaView {
         panelList.add(scrollPanelList, panelListsConstraints);
 
 
-        partidosResultadosTable.setPreferredScrollableViewportSize(new Dimension(450,300));
+        partidosResultadosTable.setPreferredScrollableViewportSize(new Dimension(450, 300));
         partidosResultadosTable.setFillsViewportHeight(true);
 
         scrollPanelTabla = new JScrollPane(partidosResultadosTable);
@@ -99,6 +103,27 @@ public class vistaGrafica1 extends LaLigaView {
         panelTablaConstraints.gridy = 1;
         panelTabla.add(getMoreInfoMatchButton, panelTablaConstraints);
 
+        clasificaciónLigaTabla = new JTable();
+        tableStandingsModel = new DefaultTableModel();
+        clasificaciónLigaTabla.setModel(tableStandingsModel);
+        tableStandingsModel.addColumn("Puesto");
+        tableStandingsModel.addColumn("Equipo");
+        tableStandingsModel.addColumn("Puntos");
+
+
+        clasificaciónLigaTabla.getTableHeader().setOpaque(false);
+        clasificaciónLigaTabla.setPreferredScrollableViewportSize(new Dimension(450,200));
+
+        JScrollPane scrollPanelClasificación = new JScrollPane(clasificaciónLigaTabla);
+        scrollPanelClasificación.setVisible(true);
+        panelClasificacion.add(scrollPanelClasificación);
+    }
+
+    private void createTablaClasificación() {
+        int contador = 0;
+        for (Map.Entry<String, Long> entry:standingsMap.entrySet() ) {
+            tableStandingsModel.addRow(new Object[]{++contador,entry.getKey(), entry.getValue()});
+        }
     }
 
     @Override
@@ -110,6 +135,7 @@ public class vistaGrafica1 extends LaLigaView {
 
         setList();
         setTable();
+        createTablaClasificación();
         GridBagConstraints panelListTableConstraints = new GridBagConstraints();
         panelListTableConstraints.gridx = 0;
         panelListTable.add(panelList, panelListTableConstraints);
@@ -129,14 +155,17 @@ public class vistaGrafica1 extends LaLigaView {
         panelPrincipal.add(panelListTable, panelPrincipalConstraints);
         panelPrincipalConstraints.gridy = 2;
         panelPrincipal.add(panelCharts, panelPrincipalConstraints);
+        panelPrincipalConstraints.gridy = 3;
+        panelPrincipal.add(panelClasificacion, panelPrincipalConstraints);
 
 
         frame.setMinimumSize(new Dimension(1000,1000));
-        frame.setLayout(new FlowLayout(FlowLayout.CENTER, 1,3));
+        frame.setLayout(new FlowLayout(FlowLayout.CENTER, 1,4));
         frame.add(panelPrincipal);
         frame.setResizable(true);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
     }
 

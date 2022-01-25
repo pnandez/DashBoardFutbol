@@ -6,7 +6,6 @@ import org.json.simple.JSONObject;
 import java.util.Date;
 import java.util.List;
 
-//TODO Implementar proxy con match
 public class MatchProxy implements IMatch{
     private ExtendedMatch extendedMatch = null;
 
