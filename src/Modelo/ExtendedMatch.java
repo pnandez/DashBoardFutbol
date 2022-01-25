@@ -12,8 +12,6 @@ import java.util.List;
 public class ExtendedMatch implements IMatch{
 
     private long ID;
-    private List<Goal> goalList = null;
-    private List<Booking> bookingList = null;
     private long homeTeamID;
     private long awayTeamID;
     private String homeTeamName;
@@ -22,6 +20,14 @@ public class ExtendedMatch implements IMatch{
     private long awayTeamScore;
     private Date matchDate;
     private long matchDay;
+    private List<String> refereesName = null;
+    private String stadiumName = null;
+    private long head2headNumberOfGoals;
+    private long head2headMatches;
+    private long head2headDraws;
+    private long head2headWonHomeTeam;
+    private long head2headWonAwayTeam;
+    private Boolean extendedDataIsSet = false;
 
     public ExtendedMatch(JSONObject object) throws Exception {
         this.ID = (long)  object.get("id");
@@ -36,32 +42,30 @@ public class ExtendedMatch implements IMatch{
     }
 
     public void setExtendedData(){
+
         JSONObject object = new JSONObject();
         try {
-            object = HTTPJSONGET.getDataFromURL("http://api.football-data.org/v2/matches/" + this, "X-Auth-Token", "8075760f2a9f441295a9c7b1a6ad7b03");
+            object = HTTPJSONGET.getDataFromURL("http://api.football-data.org/v2/matches/" + this.getID(), "X-Auth-Token", "8075760f2a9f441295a9c7b1a6ad7b03");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        parseScore((JSONObject)object.get("score"));
-        this.matchDay = (long)  object.get("matchday");
-        goalList = new ArrayList<>();
-        bookingList = new ArrayList<>();
-        JSONArray goalsArray = (JSONArray) object.get("goals");
-        for (Object obj: goalsArray) {
-            goalList.add(new Goal((JSONObject) obj));
-        }
-        JSONArray bookingsArray = (JSONArray) object.get("bookings");
-        for (Object obj: bookingsArray) {
-            bookingList.add(new Booking((JSONObject) obj));
-        }
 
+        refereesName = new ArrayList<>();
+        JSONArray refArray = (JSONArray) ((JSONObject)object.get("match")).get("referees");
+        for(Object obj : refArray){
+            refereesName.add((String) ((JSONObject)obj).get("name"));
+        }
+        stadiumName = (String) ((JSONObject)object.get("match")).get("venue");
+        head2headMatches = (long) ((JSONObject)object.get("head2head")).get("numberOfMatches");
+        head2headNumberOfGoals = (long) ((JSONObject)object.get("head2head")).get("totalGoals");
+        head2headDraws = (long) ((JSONObject)((JSONObject)object.get("head2head")).get("homeTeam")).get("draws");
+        head2headWonAwayTeam = (long) ((JSONObject)((JSONObject)object.get("head2head")).get("homeTeam")).get("losses");
+        head2headWonHomeTeam = (long) ((JSONObject)((JSONObject)object.get("head2head")).get("homeTeam")).get("wins");
+        extendedDataIsSet = true;
     }
 
     public Boolean checkIfExtendedInfoIsSet(){
-        if(goalList == null || bookingList == null){
-            return false;
-        }
-        return  true;
+        return extendedDataIsSet;
     }
 
     private void parseScore(JSONObject score) {
@@ -123,22 +127,38 @@ public class ExtendedMatch implements IMatch{
         return awayTeamName;
     }
 
-    @Override
-    public List<Goal> getGoalList() {
-        return goalList;
+    public List<String> getRefereesName() {
+        return refereesName;
     }
 
-    @Override
-    public List<Booking> getBookingList() {
-        return bookingList;
+    public String getStadiumName() {
+        return stadiumName;
     }
 
+    public long getHead2headNumberOfGoals() {
+        return head2headNumberOfGoals;
+    }
+
+    public long getHead2headMatches() {
+        return head2headMatches;
+    }
+
+    public long getHead2headDraws() {
+        return head2headDraws;
+    }
+
+    public long getHead2headWonHomeTeam() {
+        return head2headWonHomeTeam;
+    }
+
+    public long getHead2headWonAwayTeam() {
+        return head2headWonAwayTeam;
+    }
 
     @Override
     public String toString() {
         return "ExtendedMatch{" +
-                "goalList=" + goalList +
-                ", bookingList=" + bookingList +
+                "ID=" + ID +
                 ", homeTeamID=" + homeTeamID +
                 ", awayTeamID=" + awayTeamID +
                 ", homeTeamName='" + homeTeamName + '\'' +
@@ -147,8 +167,13 @@ public class ExtendedMatch implements IMatch{
                 ", awayTeamScore=" + awayTeamScore +
                 ", matchDate=" + matchDate +
                 ", matchDay=" + matchDay +
+                ", refereesName=" + refereesName +
+                ", stadiumName='" + stadiumName + '\'' +
+                ", head2headNumberOfGoals=" + head2headNumberOfGoals +
+                ", head2headMatches=" + head2headMatches +
+                ", head2headDraws=" + head2headDraws +
+                ", head2headWonHomeTeam=" + head2headWonHomeTeam +
+                ", head2headWonAwayTeam=" + head2headWonAwayTeam +
                 '}';
     }
-
-
 }

@@ -69,20 +69,61 @@ public class MatchProxy implements IMatch{
     }
 
     @Override
-    public List<Goal> getGoalList() {
+    public List<String> getRefereesName() {
         if(!extendedMatch.checkIfExtendedInfoIsSet()){
             extendedMatch.setExtendedData();
         }
-        return extendedMatch.getGoalList();
+        return extendedMatch.getRefereesName();
     }
 
     @Override
-    public List<Booking> getBookingList() {
+    public String getStadiumName() {
         if(!extendedMatch.checkIfExtendedInfoIsSet()){
             extendedMatch.setExtendedData();
         }
-        return extendedMatch.getBookingList();
+        return extendedMatch.getStadiumName();
     }
+
+    @Override
+    public long getHead2headNumberOfGoals() {
+        if(!extendedMatch.checkIfExtendedInfoIsSet()){
+            extendedMatch.setExtendedData();
+        }
+        return extendedMatch.getHead2headNumberOfGoals();
+    }
+
+    @Override
+    public long getHead2headMatches() {
+        if(!extendedMatch.checkIfExtendedInfoIsSet()){
+            extendedMatch.setExtendedData();
+        }
+        return extendedMatch.getHead2headMatches();
+    }
+
+    @Override
+    public long getHead2headDraws() {
+        if(!extendedMatch.checkIfExtendedInfoIsSet()){
+            extendedMatch.setExtendedData();
+        }
+        return extendedMatch.getHead2headDraws();
+    }
+
+    @Override
+    public long getHead2headWonHomeTeam() {
+        if(!extendedMatch.checkIfExtendedInfoIsSet()){
+            extendedMatch.setExtendedData();
+        }
+        return extendedMatch.getHead2headWonHomeTeam();
+    }
+
+    @Override
+    public long getHead2headWonAwayTeam() {
+        if(!extendedMatch.checkIfExtendedInfoIsSet()){
+            extendedMatch.setExtendedData();
+        }
+        return extendedMatch.getHead2headWonAwayTeam();
+    }
+
 
     @Override
     public String toString() {

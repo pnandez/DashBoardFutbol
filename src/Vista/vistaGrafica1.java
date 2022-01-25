@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class vistaGrafica1 extends LaLigaView {
@@ -61,7 +62,7 @@ public class vistaGrafica1 extends LaLigaView {
                 int row = partidosResultadosTable.getSelectedRow();
                 System.out.println("Button clicked. IMatch info = " + tableModel.getDataVector().elementAt(row).toString());
                 System.out.println("Real match info: " + matchList.get(row).toString());
-                displayWindowInfoMatch(controller.getInfoFromMatch(matchList.get(row).getID()));
+                displayWindowInfoMatch(controller.getMatchByID(matchList.get(row).getID()));
             }
         });
         listModel = new DefaultListModel();
@@ -153,9 +154,6 @@ public class vistaGrafica1 extends LaLigaView {
         for (int i = 0; i < playersNameList.size(); i++) {
             listModel.add(i,playersNameList.get(i));
         }
-
-
-
     }
 
     private void setComboBoxData() {
@@ -227,43 +225,116 @@ public class vistaGrafica1 extends LaLigaView {
 
     }
 
+
+    //TODO ADD STADIUM + REFS LIST + H2HTOTALS TABLE
     private void displayWindowInfoMatch(IMatch match){
         JFrame frame2 = new JFrame("Información detallada del partido");
         JPanel panelPrincipalFrame2 = new JPanel(new GridBagLayout());
-        JPanel panelequipos = new JPanel(new GridBagLayout());
-        JTable tablaGoles  = new JTable();
-        JScrollPane panelTablaGoles = new JScrollPane(tablaGoles);
-        JTable tablaBookings  = new JTable();
-        JScrollPane panelTablaBookings = new JScrollPane(tablaBookings);
-        JPanel panelTablas = new JPanel(new GridBagLayout());
-        JLabel labelFechas = new JLabel("Jornada: " + match.getMatchDay() + "           Fecha: " + match.getMatchDate());
-        JLabel homeTeamName = new JLabel(match.getHomeTeamName());
-        JLabel awayTeamName = new JLabel(match.getAwayTeamName());
-        JLabel result = new JLabel( match.getHomeTeamScore() + " - " + match.getAwayTeamScore());
 
-        //setGoalsTable();
-        //setBookingsTable();
+        JPanel panelLabels = new JPanel(new GridBagLayout());
+        JPanel panelList = new JPanel(new GridBagLayout());
+
+        JPanel panelTablas = new JPanel(new GridBagLayout());
+        JLabel labelFechas = new JLabel("Jornada: " + match.getMatchDay() + " Fecha: " + match.getMatchDate() + " Estadio: " + match.getStadiumName());
+        String result = match.getHomeTeamScore() + " - " + match.getAwayTeamScore();
+        JLabel labelEquiposYResultado = new JLabel(match.getHomeTeamName() + " " + result + " " + match.getAwayTeamName());
+
+        JList<String> refereesList = new JList<>();
+        DefaultListModel refsListModel = new DefaultListModel();
+        refereesList.setModel(refsListModel);
+        JLabel labelArbitros = new JLabel("Árbitros del partido");
+        setRefereesList(match, refsListModel);
+
+        GridBagConstraints panelListConstraints = new GridBagConstraints();
+        panelListConstraints.gridy = 0;
+        panelList.add(labelArbitros, panelListConstraints);
+        panelListConstraints.gridy = 1;
+        panelList.add(refereesList,panelListConstraints);
+
+
+
+        JLabel labelHead2Head = new JLabel("Enfrentamientos históricos.");
+        DefaultTableModel tablaModelHead2HeadTotals = new DefaultTableModel();
+        JTable tableHead2HeadTotals  = new JTable();
+        tableHead2HeadTotals.setModel(tablaModelHead2HeadTotals);
+        tablaModelHead2HeadTotals.addColumn("Partidos totales");
+        tablaModelHead2HeadTotals.addColumn("Goles totales");
+        setHead2HeadTotalsTable(match, tablaModelHead2HeadTotals);
+        tableHead2HeadTotals.getTableHeader().setOpaque(false);
+        tableHead2HeadTotals.setPreferredScrollableViewportSize(new Dimension(400,20));
+
+
+
+        DefaultTableModel tablaModelHead2HeadStandings = new DefaultTableModel();
+        JTable tableHead2HeadStandings  = new JTable();
+        tableHead2HeadStandings.setModel(tablaModelHead2HeadStandings);
+        tablaModelHead2HeadStandings.addColumn("Victorias de " + match.getHomeTeamName());
+        tablaModelHead2HeadStandings.addColumn("Draw");
+        tablaModelHead2HeadStandings.addColumn("Victorias de " + match.getAwayTeamName());
+        setHead2HeadStandingsTable(match, tablaModelHead2HeadStandings);
+        tableHead2HeadStandings.getTableHeader().setOpaque(false);
+        tableHead2HeadStandings.setPreferredScrollableViewportSize(new Dimension(400,20));
+
+
+        GridBagConstraints panelTablasConstraints = new GridBagConstraints();
+        panelTablasConstraints.gridy = 0;
+        panelTablas.add(labelHead2Head, panelTablasConstraints);
+        panelTablasConstraints.gridy = 1;
+        JScrollPane panelScrollTablaStandings = new JScrollPane(tableHead2HeadStandings);
+        panelTablas.add(panelScrollTablaStandings,panelTablasConstraints);
+        panelTablasConstraints.gridy = 2;
+        panelTablas.add(new JPanel(), panelTablasConstraints);
+        panelTablasConstraints.gridy = 3;
+        JScrollPane panelScrollTablaTotals = new JScrollPane(tableHead2HeadTotals);
+        panelTablas.add(panelScrollTablaTotals, panelTablasConstraints);
+
+
+        GridBagConstraints panelLabelsConstraints = new GridBagConstraints();
+        panelLabelsConstraints.gridy = 0;
+        panelLabelsConstraints.gridx = 1;
+        panelLabels.add(labelFechas,panelLabelsConstraints);
+        panelLabelsConstraints.gridy = 1;
+        panelLabelsConstraints.gridx = 1;
+        panelLabels.add(labelEquiposYResultado,panelLabelsConstraints);
 
         GridBagConstraints panelPrincipal2Constraints = new GridBagConstraints();
         panelPrincipal2Constraints.gridy = 0;
         panelPrincipal2Constraints.gridx = 1;
-        panelPrincipalFrame2.add(labelFechas,panelPrincipal2Constraints);
+        panelPrincipalFrame2.add(panelLabels, panelPrincipal2Constraints);
         panelPrincipal2Constraints.gridy = 1;
-        panelPrincipal2Constraints.gridx = 0;
-        panelPrincipalFrame2.add(homeTeamName,panelPrincipal2Constraints);
         panelPrincipal2Constraints.gridx = 1;
-        panelPrincipalFrame2.add(result,panelPrincipal2Constraints);
-        panelPrincipal2Constraints.gridx = 2;
-        panelPrincipalFrame2.add(awayTeamName,panelPrincipal2Constraints);
+        panelPrincipalFrame2.add(panelList, panelPrincipal2Constraints);
+        panelPrincipal2Constraints.gridy = 2;
+        panelPrincipal2Constraints.gridx = 1;
+        panelPrincipalFrame2.add(panelTablas, panelPrincipal2Constraints);
 
 
-        frame2.setMinimumSize(new Dimension(400,400));
-        frame2.setLayout(new FlowLayout(FlowLayout.CENTER, 3,3));
+        frame2.setMinimumSize(new Dimension(600,200));
+        frame2.setLayout(new FlowLayout(FlowLayout.CENTER, 1,3));
         frame2.add(panelPrincipalFrame2);
         frame2.setResizable(false);
         frame2.setVisible(true);
-        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame2.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame2.setLocationRelativeTo(null);
+        frame2.pack();
+    }
+
+    private void setRefereesList(IMatch match, DefaultListModel refsListModel) {
+        refsListModel.clear();
+        for (int i = 0; i < match.getRefereesName().size(); i++) {
+            refsListModel.add(i,match.getRefereesName().get(i));
+        }
+    }
+
+    private void setHead2HeadTotalsTable(IMatch match,DefaultTableModel tableModel) {
+        tableModel.setRowCount(0);
+        tableModel.addRow(new Object[]{match.getHead2headMatches(), match.getHead2headNumberOfGoals() });
+
+    }
+
+    private void setHead2HeadStandingsTable(IMatch match, DefaultTableModel tableModel) {
+        tableModel.setRowCount(0);
+        tableModel.addRow(new Object[]{match.getHead2headWonHomeTeam(), match.getHead2headDraws(), match.getHead2headWonAwayTeam() });
     }
 
 }

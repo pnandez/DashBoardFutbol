@@ -82,9 +82,6 @@ public class LaLigaController implements Controller {
         fachadaVista.updateView(teamToShow, getAllPlayersFromTeam(),getMapNumberPlayersPosition(),getAllMatchesFromTeam(), getStatsFromTeam());
     }
 
-    public IMatch getInfoFromMatch(long ID){
-        return modelo.getInfoFromMatch(ID);
-    }
 
     private Map<RESULT, Long> getStatsFromTeam() {
         return teamToShow.getTeamStatsMap();
@@ -96,6 +93,10 @@ public class LaLigaController implements Controller {
 
     public Team getTeamByID(long id){
         return modelo.getTeamById(id);
+    }
+
+    public IMatch getMatchByID(long id) {
+        return modelo.getMatchByID(id);
     }
 }
 

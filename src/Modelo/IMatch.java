@@ -19,8 +19,16 @@ public interface IMatch {
 
     public String getHomeTeamName();
     public String getAwayTeamName();
-    public List<Goal> getGoalList();
 
-    public List<Booking> getBookingList();
+    public List<String> getRefereesName();
+    public String getStadiumName();
+    public long getHead2headNumberOfGoals();
+
+    public long getHead2headMatches();
+
+    public long getHead2headDraws();
+    public long getHead2headWonHomeTeam();
+
+    public long getHead2headWonAwayTeam();
 
 }
