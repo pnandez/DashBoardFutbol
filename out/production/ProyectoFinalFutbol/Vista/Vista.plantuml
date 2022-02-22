@@ -11,6 +11,7 @@ title __VISTA's Class Diagram__\n
           + BarChart()
           + createChart()
           + createDataset()
+          + updateDataset()
       }
     }
   }
@@ -30,10 +31,37 @@ title __VISTA's Class Diagram__\n
           + DrawChart()
           {abstract} + createChart()
           {abstract} + createDataset()
+          + getDataMap_()
           + reArrangeYAxisRange()
           + setDataMap_()
+          {abstract} + updateDataset()
           # createChart()
           # reduceSizeArray()
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace ista {
+      abstract class Vista.LaLigaView {
+          # matchList : List<IMatch>
+          # playersNameList : List<String>
+          # positionsNumPlayersMap : Map<POSITIONS, Integer>
+          # standingsMap : Map<String, Long>
+          # teamStatsMap : Map<RESULT, Long>
+          # teamToShow : String
+          # teamsList : List<String>
+          {abstract} + display()
+          + setController()
+          + setDataMatches()
+          + setDataPlayerPositionInTeam()
+          + setDataPlayers()
+          + setLaLigaStandings()
+          + setTeam()
+          + setTeamStats()
+          + setTeamsList()
+          # LaLigaView()
       }
     }
   }
@@ -48,6 +76,7 @@ title __VISTA's Class Diagram__\n
           + LineChart()
           + createChart()
           + createDataset()
+          + updateDataset()
       }
     }
   }
@@ -61,6 +90,7 @@ title __VISTA's Class Diagram__\n
           + PieChart()
           + createChart()
           + createDataset()
+          + updateDataset()
           # setBg()
       }
     }
@@ -71,28 +101,6 @@ title __VISTA's Class Diagram__\n
     namespace ista {
       class Vista.Pruebasview {
           {static} + main()
-      }
-    }
-  }
-  
-
-  namespace  {
-    namespace ista {
-      abstract class Vista.View {
-          # matchList : List<Match>
-          # playersNameList : List<String>
-          # positionsNumPlayersMap : Map<POSITIONS, Integer>
-          # teamStatsMap : Map<RESULT, Long>
-          # teamToShow : String
-          # teamsList : List<String>
-          {abstract} + display()
-          + setDataMatches()
-          + setDataPlayerPositionInTeam()
-          + setDataPlayers()
-          + setTeam()
-          + setTeamStats()
-          + setTeamsList()
-          # View()
       }
     }
   }
@@ -124,30 +132,53 @@ title __VISTA's Class Diagram__\n
   namespace  {
     namespace ista {
       class Vista.vistaGrafica1 {
+          ~ finalMapBarChart : Map<String, Double>
+          ~ finalMapPieChart : Map<String, Double>
+          ~ listModel : DefaultListModel
+          ~ tableModel : DefaultTableModel
+          ~ tableStandingsModel : DefaultTableModel
+          - clasificaciónLigaTabla : JTable
           - frame : JFrame
+          - getMoreInfoMatchButton : JButton
+          - labelLista : JLabel
           - listaNombreJugadores : JList<String>
           - panelCharts : JPanel
-          - panelLists : JPanel
+          - panelClasificacion : JPanel
+          - panelList : JPanel
+          - panelListTable : JPanel
           - panelPrincipal : JPanel
+          - panelTabla : JPanel
           - partidosResultadosTable : JTable
+          - scrollPanelList : JScrollPane
           - scrollPanelTabla : JScrollPane
           - teamSelectorComboBox : JComboBox<String>
           + display()
-          + setDataPlayerPositionInTeam()
-          + setTeamStats()
           + vistaGrafica1()
+          - createCharts()
+          - createTablaClasificación()
+          - displayWindowInfoMatch()
+          - repaint()
+          - repaintCharts()
+          - setComboBoxData()
+          - setDatasets()
+          - setHead2HeadStandingsTable()
+          - setHead2HeadTotalsTable()
+          - setList()
+          - setRefereesList()
+          - setTable()
       }
     }
   }
   
 
   Vista.BarChart -up-|> Vista.Chart
+  Vista.LaLigaView o-- Controlador.LaLigaController : controller
   Vista.LineChart -up-|> Vista.Chart
   Vista.PieChart -up-|> Vista.Chart
   Vista.ViewFacade o-- Modelo.Team : teamToShow
-  Vista.ViewFacade o-- Vista.View : vista
-  Vista.VistaCLI -up-|> Vista.View
-  Vista.vistaGrafica1 -up-|> Vista.View
+  Vista.ViewFacade o-- Vista.LaLigaView : vista
+  Vista.VistaCLI -up-|> Vista.LaLigaView
+  Vista.vistaGrafica1 -up-|> Vista.LaLigaView
   Vista.vistaGrafica1 o-- Vista.Chart : barChartNumJugadoresPorPos
   Vista.vistaGrafica1 o-- Vista.Chart : pieChartPartidosGanadosPerdidosEmpatados
 

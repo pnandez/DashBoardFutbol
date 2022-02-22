@@ -10,9 +10,7 @@ import java.util.List;
 
 public class LaLigaModel {
     private static LaLigaModel modelInstance = null;
-    private HTTPJSONDataFetcher dataFetcher;
     private String URL = null;
-    private JSONObject rawData;
     private List<Team> teamList;
     private List<IMatch> gamesList;
     private Standings standings;
@@ -20,8 +18,6 @@ public class LaLigaModel {
     private LaLigaModel() {
         teamList = new ArrayList<>();
         gamesList = new ArrayList<>();
-        dataFetcher = new HTTPJSONDataFetcher("http://api.football-data.org/v2/");
-        dataFetcher.setRequestProperty("X-Auth-Token", "8075760f2a9f441295a9c7b1a6ad7b03");
         try {
             initModel();
         } catch (Exception e) {

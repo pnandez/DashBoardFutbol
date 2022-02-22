@@ -9,7 +9,6 @@ import java.util.*;
 public class LaLigaController implements Controller {
     private LaLigaModel modelo;
     private Team teamToShow;
-    private LaLigaView vista;
     private ViewFacade fachadaVista;
 
     public LaLigaController(LaLigaModel model, LaLigaView view){
@@ -17,7 +16,7 @@ public class LaLigaController implements Controller {
         this.fachadaVista = new ViewFacade(view);
         this.teamToShow = this.modelo.getTeamList().get(0);
         try {
-            this.vista = this.fachadaVista.createView(this, this.teamToShow,getTeamList(), getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam(), getStatsFromTeam(), modelo.getStandings());
+             this.fachadaVista.createView(this, this.teamToShow,getTeamList(), getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam(), getStatsFromTeam(), modelo.getStandings());
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -28,7 +27,7 @@ public class LaLigaController implements Controller {
         this.fachadaVista = new ViewFacade();
         try {
             this.teamToShow = this.modelo.getTeamList().get(0);
-            this.vista = this.fachadaVista.createView(this, this.teamToShow, getTeamList(), getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam(), getStatsFromTeam(), modelo.getStandings());
+            this.fachadaVista.createView(this, this.teamToShow, getTeamList(), getAllPlayersFromTeam(),getMapNumberPlayersPosition(), getAllMatchesFromTeam(), getStatsFromTeam(), modelo.getStandings());
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -88,7 +87,7 @@ public class LaLigaController implements Controller {
     }
 
     public LaLigaView getVista() {
-        return vista;
+        return fachadaVista.getVista();
     }
 
     public Team getTeamByID(long id){

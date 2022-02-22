@@ -2,7 +2,7 @@
 
 title __SRC's Class Diagram__\n
 
-  namespace a {
+  namespace  {
     class client {
     }
   }

@@ -2,133 +2,134 @@
 
 title __MODELO's Class Diagram__\n
 
-  namespace  {
-    namespace odelo {
-      class Modelo.Booking {
-          - minute : Long
-          + Booking()
-      }
-    }
-  }
-  
-
-  namespace  {
-    namespace odelo {
-      enum CARDS {
-        RED_CARD
-        YELLOW_CARD
-      }
-    }
-  }
-  
-
-  namespace  {
-    namespace odelo {
+    namespace Modelo {
       class Modelo.ExtendedMatch {
-          - bookingList : List<Booking>
-          - goalList : List<Goal>
+          - ID : long
+          - awayTeamID : long
+          - awayTeamName : String
+          - awayTeamScore : long
+          - extendedDataIsSet : Boolean
+          - head2headDraws : long
+          - head2headMatches : long
+          - head2headNumberOfGoals : long
+          - head2headWonAwayTeam : long
+          - head2headWonHomeTeam : long
+          - homeTeamID : long
+          - homeTeamName : String
+          - homeTeamScore : long
+          - matchDate : Date
+          - matchDay : long
+          - refereesName : List<String>
+          - stadiumName : String
           + ExtendedMatch()
-          + getBookingList()
-          + getGoalList()
+          + checkIfExtendedInfoIsSet()
+          + checkIfTeamPlayed()
+          + getAwayTeamID()
+          + getAwayTeamName()
+          + getAwayTeamScore()
+          + getHead2headDraws()
+          + getHead2headMatches()
+          + getHead2headNumberOfGoals()
+          + getHead2headWonAwayTeam()
+          + getHead2headWonHomeTeam()
+          + getHomeTeamID()
+          + getHomeTeamName()
+          + getHomeTeamScore()
+          + getID()
+          + getMatchDate()
+          + getMatchDay()
+          + getRefereesName()
+          + getStadiumName()
+          + setExtendedData()
+          + toString()
+          - parseScore()
       }
     }
-  }
+
   
 
-  namespace  {
-    namespace odelo {
-      class Modelo.Goal {
-          - minute : Long
-          + Goal()
-          + assistIsNull()
-          + getAssister()
-          + getMinute()
-          + getScorer()
-          + getTeam()
-      }
-    }
-  }
-  
-
-  namespace  {
-    namespace odelo {
-      class Modelo.HTTPJSONDataFetcher {
-          - connection : HttpURLConnection
-          - object : JSONObject
-          - url : URL
-          + HTTPJSONDataFetcher()
-          + getData()
-          + setHeader()
-          + setRequestProperty()
-          + setURL()
-          + setUrl()
-          - checkIfConnectionIsSetAndCorrect()
-          - closeConnection()
-          - createGETConnection()
-      }
-    }
-  }
-  
-
-  namespace  {
-    namespace odelo {
+    namespace Modelo {
       class Modelo.HTTPJSONGET {
           {static} + getDataFromURL()
       }
     }
-  }
-  
 
-  namespace  {
-    namespace odelo {
+
+    namespace Modelo {
+      interface Modelo.IMatch {
+          {abstract} + checkIfTeamPlayed()
+          {abstract} + getAwayTeamID()
+          {abstract} + getAwayTeamName()
+          {abstract} + getAwayTeamScore()
+          {abstract} + getHead2headDraws()
+          {abstract} + getHead2headMatches()
+          {abstract} + getHead2headNumberOfGoals()
+          {abstract} + getHead2headWonAwayTeam()
+          {abstract} + getHead2headWonHomeTeam()
+          {abstract} + getHomeTeamID()
+          {abstract} + getHomeTeamName()
+          {abstract} + getHomeTeamScore()
+          {abstract} + getID()
+          {abstract} + getMatchDate()
+          {abstract} + getMatchDay()
+          {abstract} + getRefereesName()
+          {abstract} + getStadiumName()
+      }
+    }
+
+
+    namespace Modelo {
       class Modelo.LaLigaModel {
           - URL : String
-          - gamesList : List<Match>
+          - gamesList : List<IMatch>
           {static} - modelInstance : LaLigaModel
-          - rawData : JSONObject
           - teamList : List<Team>
           + getGamesList()
-          + getInfoFromMatch()
           {static} + getInstance()
+          + getMatchByID()
+          + getStandings()
           + getTeamById()
           + getTeamByName()
+          + getTeamList()
           + initModel()
           + setStatsForTeam()
           - LaLigaModel()
           - setGamesList()
           - setPlayers()
+          - setStandings()
           - setTeamList()
       }
     }
-  }
+
   
 
-  namespace  {
-    namespace odelo {
-      class Modelo.Match {
-          - awayTeamID : long
-          - awayTeamScore : long
-          - homeTeamID : long
-          - homeTeamScore : long
-          - matchDate : Date
-          - matchDay : long
-          + Match()
+    namespace Modelo {
+      class Modelo.MatchProxy {
+          + MatchProxy()
           + checkIfTeamPlayed()
           + getAwayTeamID()
+          + getAwayTeamName()
           + getAwayTeamScore()
+          + getHead2headDraws()
+          + getHead2headMatches()
+          + getHead2headNumberOfGoals()
+          + getHead2headWonAwayTeam()
+          + getHead2headWonHomeTeam()
           + getHomeTeamID()
+          + getHomeTeamName()
           + getHomeTeamScore()
+          + getID()
           + getMatchDate()
           + getMatchDay()
+          + getRefereesName()
+          + getStadiumName()
           + toString()
-          - parseScore()
       }
     }
-  }
+
   
 
-  namespace  {
-    namespace odelo {
+    namespace Modelo {
       enum POSITIONS {
         Attacker
         Defender
@@ -136,11 +137,10 @@ title __MODELO's Class Diagram__\n
         Midfielder
       }
     }
-  }
+
   
 
-  namespace  {
-    namespace odelo {
+    namespace Modelo {
       class Modelo.Player {
           - id : long
           - name : String
@@ -153,31 +153,38 @@ title __MODELO's Class Diagram__\n
           + setId()
       }
     }
-  }
+
   
 
-  namespace  {
-    namespace odelo {
+    namespace Modelo {
       class Modelo.PruebasModelo {
           {static} + main()
       }
     }
-  }
+
   
 
-  namespace  {
-    namespace odelo {
+    namespace Modelo {
       enum RESULT {
         DRAW
         LOST
         WON
       }
     }
-  }
+
   
 
-  namespace  {
-    namespace odelo {
+    namespace Modelo {
+      class Modelo.Standings {
+          ~ standingsMap : Map<String, Long>
+          + Standings()
+          + getStandingsMap()
+      }
+    }
+
+  
+
+    namespace Modelo {
       class Modelo.Team {
           - goalsReceived : long
           - goalsScored : long
@@ -203,17 +210,13 @@ title __MODELO's Class Diagram__\n
           + setSquad()
       }
     }
-  }
+
   
 
-  Modelo.Booking o-- Modelo.CARDS : card
-  Modelo.Booking o-- Modelo.Player : player
-  Modelo.Booking o-- Modelo.Team : team
-  Modelo.ExtendedMatch -up-|> Modelo.Match
-  Modelo.Goal o-- Modelo.Player : assister
-  Modelo.Goal o-- Modelo.Player : scorer
-  Modelo.Goal o-- Modelo.Team : team
-  Modelo.LaLigaModel o-- Modelo.HTTPJSONDataFetcher : dataFetcher
+  Modelo.ExtendedMatch .up.|> Modelo.IMatch
+  Modelo.LaLigaModel o-- Modelo.Standings : standings
+  Modelo.MatchProxy .up.|> Modelo.IMatch
+  Modelo.MatchProxy o-- Modelo.ExtendedMatch : extendedMatch
   Modelo.Player o-- Modelo.POSITIONS : position
 
 

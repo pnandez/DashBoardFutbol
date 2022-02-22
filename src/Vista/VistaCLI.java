@@ -3,6 +3,8 @@ package Vista;
 import Modelo.IMatch;
 import Modelo.MatchProxy;
 
+import java.util.Map;
+
 public class VistaCLI extends LaLigaView {
 
     public VistaCLI(){
@@ -21,6 +23,12 @@ public class VistaCLI extends LaLigaView {
             System.out.println(m.toString());
         }
         System.out.println("Mostrando estadísticas del equipo: " + teamStatsMap);
+        System.out.println("Mostrando clasificación de la liga: ");
+        System.out.println("[Posición, Equipo, Puntos]");
+        int contador = 0;
+        for(Map.Entry<String, Long> entry : standingsMap.entrySet()){
+            System.out.println("[" + contador + ", " + entry.getKey() + ", " + entry.getValue() + "]");
+        }
     }
 
 }

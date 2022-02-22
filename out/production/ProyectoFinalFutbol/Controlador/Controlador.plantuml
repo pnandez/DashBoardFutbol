@@ -17,9 +17,12 @@ title __CONTROLADOR's Class Diagram__\n
           + LaLigaController()
           + getAllMatchesFromTeam()
           + getAllPlayersFromTeam()
-          + getInfoFromMatch()
           + getMapNumberPlayersPosition()
+          + getMatchByID()
+          + getTeamByID()
+          + getTeamList()
           + getVista()
+          + setNewTeamToShow()
           + setTeamToShow()
           - getStatsFromTeam()
       }
@@ -40,7 +43,7 @@ title __CONTROLADOR's Class Diagram__\n
   Controlador.LaLigaController o-- Vista.ViewFacade : fachadaVista
   Controlador.LaLigaController o-- Modelo.LaLigaModel : modelo
   Controlador.LaLigaController o-- Modelo.Team : teamToShow
-  Controlador.LaLigaController o-- Vista.View : vista
+  Controlador.LaLigaController o-- Vista.LaLigaView : vista
 
 
 right footer

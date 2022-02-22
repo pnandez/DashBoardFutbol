@@ -14,7 +14,7 @@ import java.util.Map;
 
 public abstract class Chart {
     protected String title_;
-    protected JFreeChart chart_;
+    protected JFreeChart chart_ = null;
     protected String xAxisName_;
     protected String yAxisName_;
     protected Map<String, Double> dataMap_;
@@ -47,6 +47,9 @@ public abstract class Chart {
     }
 
     public ChartPanel DrawChart() throws Exception {
+        if(chart_ ==  null){
+            chart_ = this.createChart();
+        }
         ChartPanel chartPanel =new ChartPanel(chart_);
         chartPanel.setPreferredSize(new Dimension(500, 270));
         chartPanel.setBorder(new EmptyBorder(10,10,10,10));

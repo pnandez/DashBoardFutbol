@@ -2,233 +2,165 @@
 
 title __PROYECTOFINALFUTBOL's Class Diagram__\n
 
-  namespace  {
-    namespace ontrolador {
+
+    namespace Controlador {
       interface Controlador.Controller {
       }
     }
-  }
+
   
 
-  namespace  {
-    namespace ontrolador {
+
+    namespace Controlador {
       class Controlador.LaLigaController {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace ontrolador {
+
+    namespace Controlador {
       class Controlador.prueba {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace odelo {
-      class Modelo.Booking {
-      }
-    }
-  }
-  
-
-  namespace  {
-    namespace odelo {
-      enum CARDS {
-      }
-    }
-  }
-  
-
-  namespace  {
-    namespace odelo {
+    namespace Modelo {
       class Modelo.ExtendedMatch {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace odelo {
-      class Modelo.Goal {
+    namespace Modelo {
+      class Modelo.ExtendedMatch {
       }
     }
-  }
+
   
 
-  namespace  {
-    namespace odelo {
-      class Modelo.HTTPJSONDataFetcher {
-      }
-    }
-  }
-  
 
-  namespace  {
-    namespace odelo {
+    namespace Modelo {
       class Modelo.HTTPJSONGET {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace odelo {
+
+    namespace Modelo {
+      interface Modelo.IMatch {
+      }
+    }
+
+
+    namespace Modelo {
       class Modelo.LaLigaModel {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace odelo {
-      class Modelo.Match {
+
+    namespace Modelo {
+      class Modelo.MatchProxy {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace odelo {
+    namespace Modelo {
       enum POSITIONS {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace odelo {
+
+    namespace Modelo {
       class Modelo.Player {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace odelo {
+
+    namespace Modelo {
       class Modelo.PruebasModelo {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace odelo {
+
+    namespace Modelo {
       enum RESULT {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace odelo {
+
+    namespace Modelo {
+      class Modelo.Standings {
+      }
+    }
+
+
+    namespace Modelo {
       class Modelo.Team {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace ista {
+
+    namespace Vista {
       class Vista.BarChart {
       }
     }
-  }
+
   
 
-  namespace  {
-    namespace ista {
+    namespace Vista {
       abstract class Vista.Chart {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace ista {
+    namespace Vista {
+      abstract class Vista.LaLigaView {
+      }
+    }
+
+    namespace Vista {
       class Vista.LineChart {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace ista {
+    namespace Vista {
       class Vista.PieChart {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace ista {
+    namespace Vista {
       class Vista.Pruebasview {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace ista {
-      abstract class Vista.View {
-      }
-    }
-  }
-  
-
-  namespace  {
-    namespace ista {
+    namespace Vista {
       class Vista.ViewFacade {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace ista {
+    namespace Vista {
       class Vista.VistaCLI {
       }
     }
-  }
-  
 
-  namespace  {
-    namespace ista {
+    namespace Vista {
       class Vista.vistaGrafica1 {
       }
     }
-  }
-  
 
-  namespace  {
-    class client {
-    }
-  }
   
 
   Controlador.LaLigaController .up.|> Controlador.Controller
   Controlador.LaLigaController o-- Vista.ViewFacade : fachadaVista
   Controlador.LaLigaController o-- Modelo.LaLigaModel : modelo
   Controlador.LaLigaController o-- Modelo.Team : teamToShow
-  Controlador.LaLigaController o-- Vista.View : vista
-  Modelo.Booking o-- Modelo.CARDS : card
-  Modelo.Booking o-- Modelo.Player : player
-  Modelo.Booking o-- Modelo.Team : team
-  Modelo.ExtendedMatch -up-|> Modelo.Match
-  Modelo.Goal o-- Modelo.Player : assister
-  Modelo.Goal o-- Modelo.Player : scorer
-  Modelo.Goal o-- Modelo.Team : team
-  Modelo.LaLigaModel o-- Modelo.HTTPJSONDataFetcher : dataFetcher
+  Modelo.ExtendedMatch .up.|> Modelo.IMatch
+  Modelo.ExtendedMatch .up.|> Modelo.IMatch
+  Modelo.LaLigaModel o-- Modelo.Standings : standings
+  Modelo.MatchProxy .up.|> Modelo.IMatch
+  Modelo.MatchProxy o-- Modelo.ExtendedMatch : extendedMatch
   Modelo.Player o-- Modelo.POSITIONS : position
   Vista.BarChart -up-|> Vista.Chart
+  Vista.LaLigaView o-- Controlador.LaLigaController : controller
   Vista.LineChart -up-|> Vista.Chart
   Vista.PieChart -up-|> Vista.Chart
   Vista.ViewFacade o-- Modelo.Team : teamToShow
-  Vista.ViewFacade o-- Vista.View : vista
-  Vista.VistaCLI -up-|> Vista.View
-  Vista.vistaGrafica1 -up-|> Vista.View
+  Vista.ViewFacade o-- Vista.LaLigaView : vista
+  Vista.VistaCLI -up-|> Vista.LaLigaView
+  Vista.vistaGrafica1 -up-|> Vista.LaLigaView
   Vista.vistaGrafica1 o-- Vista.Chart : barChartNumJugadoresPorPos
   Vista.vistaGrafica1 o-- Vista.Chart : pieChartPartidosGanadosPerdidosEmpatados
 
